@@ -33,6 +33,7 @@ dependencies:
   http: ^0.12.2
   curved_navigation_bar: ^0.3.7
   toggle_switch: ^0.1.9
+  flutter_rating_bar: ^4.0.0
 
 dev_dependencies:
   flutter_test:

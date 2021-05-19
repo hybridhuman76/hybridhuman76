@@ -9,9 +9,75 @@ class _SecondState extends State<Second> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(
-        child: Text("this is second screen"),
-      ),
-    );
+        child: SafeArea(
+            child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.all(10.0),
+          child: TextField(
+            decoration: InputDecoration(
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () {},
+                ),
+                hintText: "search gym trainers",
+                hintStyle: TextStyle(fontWeight: FontWeight.w400),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(50)))),
+          ),
+        ),
+        Container(
+          height: 425,
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                trainerview(),
+                trainerview(),
+                trainerview(),
+                trainerview(),
+                trainerview(),
+                trainerview(),
+              ],
+            ),
+          ),
+        )
+      ],
+    )));
   }
+}
+
+trainerview() {
+  return Padding(
+    padding: EdgeInsets.symmetric(vertical: 5),
+    child: Card(
+      elevation: 10,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          const ListTile(
+            leading: Icon(
+              Icons.person,
+              size: 45,
+              color: Colors.green,
+            ),
+            title: Text(
+              'Aakash',
+              style: TextStyle(
+                  fontFamily: 'Montserrat', fontWeight: FontWeight.w500),
+            ),
+            subtitle: Text(
+              'Speciality',
+              style: TextStyle(fontWeight: FontWeight.w400),
+            ),
+            trailing: Icon(
+              Icons.call,
+              color: Colors.green,
+              size: 30,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }

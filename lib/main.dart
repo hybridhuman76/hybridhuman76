@@ -2,11 +2,9 @@
 // demo pass - abc123
 
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/firstscreen.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 
 void main() => runApp(new MyApp());
 

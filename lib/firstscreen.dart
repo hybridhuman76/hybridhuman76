@@ -31,9 +31,9 @@ class _FirstState extends State<First> {
         key: _bottomNavigationKey,
         items: <Widget>[
           Icon(Icons.home, size: 30, color: Colors.white),
-          Icon(Icons.two_k, size: 30, color: Colors.white),
+          Icon(Icons.sports_esports, size: 30, color: Colors.white),
           Icon(
-            Icons.three_k,
+            Icons.person,
             size: 30,
             color: Colors.white,
           ),
