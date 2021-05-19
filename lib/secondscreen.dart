@@ -47,6 +47,7 @@ class _SecondState extends State<Second> {
   }
 }
 
+String speciality = "speciality", name = "name";
 trainerview() {
   return Padding(
     padding: EdgeInsets.symmetric(vertical: 5),
@@ -62,12 +63,12 @@ trainerview() {
               color: Colors.green,
             ),
             title: Text(
-              'Aakash',
+              'Trainer Name',
               style: TextStyle(
                   fontFamily: 'Montserrat', fontWeight: FontWeight.w500),
             ),
             subtitle: Text(
-              'Speciality',
+              "speciality",
               style: TextStyle(fontWeight: FontWeight.w400),
             ),
             trailing: Icon(
