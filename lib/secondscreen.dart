@@ -6,29 +6,63 @@ class Second extends StatefulWidget {
 }
 
 class _SecondState extends State<Second> {
+  double _width = 0;
+  bool expanded = false;
+  TextEditingController textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final double h = MediaQuery.of(context).size.height;
+    final double w = MediaQuery.of(context).size.width;
     return Container(
         child: SafeArea(
             child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        Padding(
-          padding: EdgeInsets.all(10.0),
-          child: TextField(
-            decoration: InputDecoration(
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {},
+        Row(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(left: 5),
+              child: AnimatedContainer(
+                // Use the properties stored in the State class.
+                // width: _width,
+                width: _width,
+                height: 40,
+
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
                 ),
-                hintText: "search gym trainers",
-                hintStyle: TextStyle(fontWeight: FontWeight.w400),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(50)))),
-          ),
+                // Define how long the animation should take.
+                duration: Duration(milliseconds: 1200),
+                // Provide an optional curve to make the animation feel smoother.
+                curve: Curves.fastOutSlowIn,
+                child: TextField(
+                  textAlignVertical: TextAlignVertical.bottom,
+                  textAlign: TextAlign.start,
+                  decoration: InputDecoration(
+                      hintText: "search gym trainers",
+                      hintStyle: TextStyle(fontWeight: FontWeight.w400),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15)))),
+                ),
+              ),
+            ),
+            IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  setState(() {
+                    if (expanded == false) {
+                      _width = w - 55;
+                      expanded = true;
+                    } else {
+                      _width = 0;
+                      expanded = false;
+                    }
+                  });
+                }),
+          ],
         ),
         Container(
-          height: 425,
+          height: h - 140,
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[

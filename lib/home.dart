@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -8,10 +6,17 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  double _width = 0;
+  bool expanded = false;
+  TextEditingController textController = TextEditingController();
+
+  BorderRadiusGeometry _borderRadius = BorderRadius.circular(8);
+
   @override
   Widget build(BuildContext context) {
     final double h = MediaQuery.of(context).size.height;
     final double w = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Container(
           child: SafeArea(
@@ -21,30 +26,78 @@ class _HomeState extends State<Home> {
           Row(
             children: <Widget>[
               IconButton(icon: Icon(Icons.menu), onPressed: () {}),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                child: Container(
-                  height: 60,
-                  width: w - 58,
+              AnimatedContainer(
+                // Use the properties stored in the State class.
+                // width: _width,
+                width: _width,
+                height: 40,
+
+                decoration: BoxDecoration(
                   color: Colors.transparent,
-                  child: TextField(
-                    decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.search),
-                          onPressed: () {},
-                        ),
-                        hintText: "search gyms",
-                        hintStyle: TextStyle(fontWeight: FontWeight.w400),
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(50)))),
-                  ),
+                  borderRadius: _borderRadius,
+                ),
+                // Define how long the animation should take.
+                duration: Duration(milliseconds: 1200),
+                // Provide an optional curve to make the animation feel smoother.
+                curve: Curves.fastOutSlowIn,
+                child: TextField(
+                  textAlignVertical: TextAlignVertical.bottom,
+                  textAlign: TextAlign.start,
+                  decoration: InputDecoration(
+                      hintText: "search gyms",
+                      hintStyle: TextStyle(fontWeight: FontWeight.w400),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15)))),
                 ),
               ),
+              IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () {
+                    setState(() {
+                      if (expanded == false) {
+                        _width = w - 100;
+                        expanded = true;
+                      } else {
+                        _width = 0;
+                        expanded = false;
+                      }
+                    });
+                  }),
             ],
           ),
+
+          //todo: uncomment below widget to make it visible
+          // Row(
+          //   children: <Widget>[
+          //     IconButton(icon: Icon(Icons.menu), onPressed: () {}),
+          //     Padding(
+          //       padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+          //       child: Container(
+          //           height: 40,
+          //           width: w - 58,
+          //           color: Colors.transparent,
+          //           child: Center(
+          //             child: TextField(
+          //               textAlignVertical: TextAlignVertical.bottom,
+          //               textAlign: TextAlign.start,
+          //               decoration: InputDecoration(
+          //                   suffixIcon: IconButton(
+          //                     icon: Icon(Icons.search),
+          //                     onPressed: () {},
+          //                   ),
+          //                   hintText: "search gyms",
+          //                   hintStyle: TextStyle(fontWeight: FontWeight.w400),
+          //                   border: OutlineInputBorder(
+          //                       borderRadius:
+          //                           BorderRadius.all(Radius.circular(15)))),
+          //             ),
+          //           )),
+          //     ),
+          //   ],
+          // ),
+
           Container(
-            height: h - 170,
+            height: h - 140,
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
@@ -87,10 +140,11 @@ gymview() {
                         Container(
                           width: 180,
                           child: Text(
-                            'CrossFitness Gym',
+                            "CrossFitness Gym",
                             style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w500),
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         )
                       ],
@@ -101,10 +155,11 @@ gymview() {
                         Container(
                           width: 180,
                           child: Text(
-                            'Location',
+                            "Location",
                             style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w500),
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ],
@@ -168,10 +223,11 @@ gymview() {
                       children: <Widget>[
                         Icon(Icons.map),
                         Text(
-                          'xyz kms',
+                          "2.4 kms",
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w600),
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ],
                     )
