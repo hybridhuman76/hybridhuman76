@@ -101,8 +101,26 @@ class _HomeState extends State<Home> {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  gymview(),
-                  gymview(),
+                  gymview("CrossFitness Gym",
+                      "Hoshiyarpur Village, Sector 51, Noida", 1.4),
+                  gymview(
+                      "GetFit Fit Forever Gym",
+                      "A-72, Sector 50, near Raghuveer Nursing Home, Noida, Uttar Pradesh",
+                      1.8),
+                  gymview("CrossFitness Gym",
+                      "Hoshiyarpur Village, Sector 51, Noida", 1.4),
+                  gymview(
+                      "GetFit Fit Forever Gym",
+                      "A-72, Sector 50, near Raghuveer Nursing Home, Noida, Uttar Pradesh",
+                      1.8),
+                  gymview("CrossFitness Gym",
+                      "Hoshiyarpur Village, Sector 51, Noida", 1.4),
+                  gymview(
+                      "GetFit Fit Forever Gym",
+                      "A-72, Sector 50, near Raghuveer Nursing Home, Noida, Uttar Pradesh",
+                      1.8),
+                  gymview("CrossFitness Gym",
+                      "Hoshiyarpur Village, Sector 51, Noida", 1.4),
                 ],
               ),
             ),
@@ -113,7 +131,7 @@ class _HomeState extends State<Home> {
   }
 }
 
-gymview() {
+gymview(String gymName, String gymLocation, double gymDistance) {
   return Card(
     elevation: 10,
     child: Column(
@@ -121,8 +139,12 @@ gymview() {
         Padding(
           padding: EdgeInsets.all(10),
           child: Container(
+            height: 200,
+            width: double.maxFinite,
             child: Image.network(
-                "https://images.newindianexpress.com/uploads/user/imagelibrary/2020/9/27/w900X450/gym-EPS.jpg"),
+              "https://images.newindianexpress.com/uploads/user/imagelibrary/2020/9/27/w900X450/gym-EPS.jpg",
+              fit: BoxFit.fill,
+            ),
           ),
         ),
         Row(
@@ -134,35 +156,49 @@ gymview() {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Icon(Icons.fitness_center),
-                        Container(
-                          width: 180,
-                          child: Text(
-                            "CrossFitness Gym",
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w500,
+                    Padding(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Icon(Icons.fitness_center),
+                          Container(
+                            width: 180,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 5.0),
+                              child: Text(
+                                "$gymName",
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 10.0),
                     ),
-                    Row(
-                      children: <Widget>[
-                        Icon(Icons.location_on),
-                        Container(
-                          width: 180,
-                          child: Text(
-                            "Location",
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w500,
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Icon(Icons.location_on),
+                          Container(
+                            width: 180,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 5.0),
+                              child: Text(
+                                "$gymLocation",
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     MaterialButton(
                       onPressed: () {},
@@ -223,7 +259,7 @@ gymview() {
                       children: <Widget>[
                         Icon(Icons.map),
                         Text(
-                          "2.4 kms",
+                          "$gymDistance kms",
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w500,
