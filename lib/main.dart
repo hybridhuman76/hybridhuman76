@@ -5,8 +5,16 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/firstscreen.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'signup.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-void main() => runApp(new MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(new MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -42,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String error_msg = "", _email, _pass;
   @override
   Widget build(BuildContext context) {
+    final auth = FirebaseAuth.instance;
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -105,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Container(
-              height: 200,
+              height: 230,
               width: 300,
               color: Colors.pink.withOpacity(0.0),
               child: Column(
@@ -141,6 +150,13 @@ class _MyHomePageState extends State<MyHomePage> {
                             borderSide: BorderSide(color: Colors.green))),
                   ),
                   MaterialButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Signup()));
+                    },
+                    child: Text("new to hybrid human? signup"),
+                  ),
+                  MaterialButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                       child: Text(
@@ -152,7 +168,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       minWidth: 250,
                       color: Colors.green,
                       onPressed: () {
-                        if (_email == "abc@xyz.com" && _pass == "abc123") {
+                        auth.signInWithEmailAndPassword(
+                            email: _email, password: _pass);
+                        User firebaseUser = FirebaseAuth.instance.currentUser;
+                        if (firebaseUser != null) {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) => First()));
                         } else {
@@ -160,7 +179,17 @@ class _MyHomePageState extends State<MyHomePage> {
                             error_msg = "WRONG EMAIL OR PASSWORD, TRY AGAIN!";
                           });
                         }
-                      }),
+                      }
+
+                      // if (_email == "abc@xyz.com" && _pass == "abc123") {
+                      //   Navigator.push(context,
+                      //       MaterialPageRoute(builder: (context) => First()));
+                      // } else {
+                      //   setState(() {
+                      //     error_msg = "WRONG EMAIL OR PASSWORD, TRY AGAIN!";
+                      //   });
+                      // }
+                      ),
                 ],
               ),
             ),

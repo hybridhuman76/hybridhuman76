@@ -9,6 +9,8 @@ class _SecondState extends State<Second> {
   double _width = 0;
   bool expanded = false;
   TextEditingController textController = TextEditingController();
+
+  BorderRadiusGeometry _borderRadius = BorderRadius.circular(8);
   @override
   Widget build(BuildContext context) {
     final double h = MediaQuery.of(context).size.height;
@@ -20,30 +22,29 @@ class _SecondState extends State<Second> {
       children: <Widget>[
         Row(
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(left: 5),
-              child: AnimatedContainer(
-                // Use the properties stored in the State class.
-                // width: _width,
-                width: _width,
-                height: 40,
+            IconButton(icon: Icon(Icons.menu), onPressed: () {}),
+            AnimatedContainer(
+              // Use the properties stored in the State class.
+              // width: _width,
+              width: _width,
+              height: 40,
 
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                ),
-                // Define how long the animation should take.
-                duration: Duration(milliseconds: 1200),
-                // Provide an optional curve to make the animation feel smoother.
-                curve: Curves.fastOutSlowIn,
-                child: TextField(
-                  textAlignVertical: TextAlignVertical.bottom,
-                  textAlign: TextAlign.start,
-                  decoration: InputDecoration(
-                      hintText: "search gym trainers",
-                      hintStyle: TextStyle(fontWeight: FontWeight.w400),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15)))),
-                ),
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: _borderRadius,
+              ),
+              // Define how long the animation should take.
+              duration: Duration(milliseconds: 1200),
+              // Provide an optional curve to make the animation feel smoother.
+              curve: Curves.fastOutSlowIn,
+              child: TextField(
+                textAlignVertical: TextAlignVertical.bottom,
+                textAlign: TextAlign.start,
+                decoration: InputDecoration(
+                    hintText: "search gym trainers",
+                    hintStyle: TextStyle(fontWeight: FontWeight.w400),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15)))),
               ),
             ),
             IconButton(
@@ -51,7 +52,7 @@ class _SecondState extends State<Second> {
                 onPressed: () {
                   setState(() {
                     if (expanded == false) {
-                      _width = w - 55;
+                      _width = w - 100;
                       expanded = true;
                     } else {
                       _width = 0;
