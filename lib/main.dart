@@ -19,6 +19,10 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // User result = FirebaseAuth.instance.currentUser;
+    // if (result != null) {
+    //   Navigator.push(context, MaterialPageRoute(builder: (context) => First()));
+    // }
     return AdaptiveTheme(
       light: ThemeData(
           brightness: Brightness.light,
@@ -168,19 +172,34 @@ class _MyHomePageState extends State<MyHomePage> {
                       minWidth: 250,
                       color: Colors.green,
                       onPressed: () {
-                        auth.signInWithEmailAndPassword(
-                            email: _email, password: _pass);
-                        User firebaseUser = FirebaseAuth.instance.currentUser;
-                        if (firebaseUser != null) {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => First()));
-                        } else {
-                          setState(() {
-                            error_msg = "WRONG EMAIL OR PASSWORD, TRY AGAIN!";
-                          });
-                        }
+                        auth
+                            .signInWithEmailAndPassword(
+                                email: _email, password: _pass)
+                            .then((result) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => First()),
+                          );
+                        }).catchError((err) {
+                          print(err.message);
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text("Error"),
+                                  content: Text(err.message),
+                                  actions: [
+                                    TextButton(
+                                      child: Text("Ok"),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    )
+                                  ],
+                                );
+                              });
+                        });
                       }
-
                       // if (_email == "abc@xyz.com" && _pass == "abc123") {
                       //   Navigator.push(context,
                       //       MaterialPageRoute(builder: (context) => First()));

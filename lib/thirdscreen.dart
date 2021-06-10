@@ -1,19 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Third extends StatefulWidget {
   @override
   _ThirdState createState() => _ThirdState();
 }
 
-String name = "name";
+String name = "lol";
 String userid = "demoid";
 String mob = "9898989898";
 String email = "email@email.com";
 double balance = 0.0;
 
 class _ThirdState extends State<Third> {
+  final firestoreInstance = FirebaseFirestore.instance;
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  var firebaseUser = FirebaseAuth.instance.currentUser;
+
+  Future<void> getdata() async {
+    DocumentSnapshot variable =
+        await firestoreInstance.collection('users').doc(firebaseUser.uid).get();
+    print(variable);
+    print("hello");
+  }
+
+  var useremail;
+  Future<void> getPhoto(id) async {
+    //query the user photo
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(id)
+        .snapshots()
+        .listen((event) {
+      setState(() {
+        useremail = event.get('name');
+        print(useremail);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    User lol = FirebaseAuth.instance.currentUser;
+    final id = lol.uid;
+    // getdata();
+    getPhoto(id);
     return SafeArea(
         child: Container(
             child: Center(
@@ -114,7 +147,15 @@ class _ThirdState extends State<Third> {
               height: 40,
               minWidth: 250,
               color: Colors.green,
-              onPressed: () {}),
+              onPressed: () {
+                FirebaseAuth auth = FirebaseAuth.instance;
+                auth.signOut().then((res) {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => MyApp()),
+                      (Route<dynamic> route) => false);
+                });
+              }),
         ],
       ),
     )));
