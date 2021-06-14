@@ -4,11 +4,10 @@ import 'package:flutter_application_1/secondscreen.dart';
 import 'package:flutter_application_1/thirdscreen.dart';
 import 'home.dart';
 
-int _page = 0;
 GlobalKey _bottomNavigationKey = GlobalKey();
 
 class First extends StatefulWidget {
-  First({Key key}) : super(key: key);
+  First({Key? key}) : super(key: key);
   @override
   _FirstState createState() => _FirstState();
 }
@@ -19,7 +18,7 @@ class _FirstState extends State<First> {
 
   @override
   Widget build(BuildContext context) {
-    var h = MediaQuery.of(context).size.height;
+    // var h = MediaQuery.of(context).size.height;
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
         animationCurve: Curves.easeOut,

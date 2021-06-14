@@ -8,45 +8,44 @@ class Third extends StatefulWidget {
   _ThirdState createState() => _ThirdState();
 }
 
-String name = "lol";
+String name = "loading..";
 String userid = "demoid";
-String mob = "9898989898";
-String email = "email@email.com";
+String mob = "loading..";
+String email = "loading..";
 double balance = 0.0;
 
 class _ThirdState extends State<Third> {
   final firestoreInstance = FirebaseFirestore.instance;
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  var firebaseUser = FirebaseAuth.instance.currentUser;
+  User? firebaseUser = FirebaseAuth.instance.currentUser;
 
-  Future<void> getdata() async {
-    DocumentSnapshot variable =
-        await firestoreInstance.collection('users').doc(firebaseUser.uid).get();
-    print(variable);
-    print("hello");
-  }
-
-  var useremail;
-  Future<void> getPhoto(id) async {
-    //query the user photo
-    await FirebaseFirestore.instance
+  void x() {
+    FirebaseFirestore.instance
         .collection('users')
-        .doc(id)
-        .snapshots()
-        .listen((event) {
-      setState(() {
-        useremail = event.get('name');
-        print(useremail);
-      });
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .get()
+        .then((value) {
+      {
+        if (value.exists) {
+          setState(() {
+            name = "${(value.data()?["name"])}";
+            mob = "${(value.data()?["mobile"])}";
+            email = "${(value.data()?["email"])}";
+          });
+          print('Document data: ${(value.data()?["name"])}');
+        } else {
+          print('Document does not exist on the database');
+        }
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    User lol = FirebaseAuth.instance.currentUser;
-    final id = lol.uid;
-    // getdata();
-    getPhoto(id);
+    // CollectionReference users = FirebaseFirestore.instance.collection('users');
+    User? lol = FirebaseAuth.instance.currentUser;
+    final id = lol?.uid;
+    x();
     return SafeArea(
         child: Container(
             child: Center(
@@ -159,5 +158,62 @@ class _ThirdState extends State<Third> {
         ],
       ),
     )));
+  }
+}
+
+function(id) {
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  return FutureBuilder<DocumentSnapshot>(
+    future: users.doc(id).get(),
+    builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+      if (snapshot.hasError) {
+        print("smth went brr");
+      }
+
+      if (snapshot.hasData && !snapshot.data!.exists) {
+        print("doc doestn exist");
+      }
+
+      if (snapshot.connectionState == ConnectionState.done) {
+        Map<String, dynamic> data =
+            snapshot.data!.data() as Map<String, dynamic>;
+        print("Full Name: ${data['name']} ${data['email']}");
+      }
+
+      return Text("loading");
+    },
+  );
+}
+
+class GetUserName extends StatelessWidget {
+  final String documentId;
+
+  GetUserName(this.documentId);
+
+  @override
+  Widget build(BuildContext context) {
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+    return FutureBuilder<DocumentSnapshot>(
+      future: users.doc(documentId).get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text("Something went wrong");
+        }
+
+        if (snapshot.hasData && !snapshot.data!.exists) {
+          return Text("Document does not exist");
+        }
+
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          return Text("Full Name: ${data['full_name']} ${data['last_name']}");
+        }
+
+        return Text("loading");
+      },
+    );
   }
 }

@@ -5,7 +5,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/firstscreen.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -51,7 +50,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<bool> isSelected = [false, false];
-  String error_msg = "", _email, _pass;
+  String errorMsg = "", _email = "", _pass = "";
   @override
   Widget build(BuildContext context) {
     final auth = FirebaseAuth.instance;
@@ -212,7 +211,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            Text("$error_msg",
+            Text("$errorMsg",
                 style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontSize: 13,
