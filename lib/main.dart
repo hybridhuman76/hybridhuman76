@@ -6,14 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/firstscreen.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
 import 'signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:shimmer/shimmer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(new MyApp());
 }
+
+Color colorbtn = Colors.green;
 
 class MyApp extends StatelessWidget {
   @override
@@ -159,55 +163,75 @@ class _MyHomePageState extends State<MyHomePage> {
                     },
                     child: Text("new to hybrid human? signup"),
                   ),
-                  MaterialButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Text(
-                        "LOGIN",
-                        style: TextStyle(
-                            fontFamily: 'Montserrat', color: Colors.white),
-                      ),
-                      height: 40,
-                      minWidth: 250,
-                      color: Colors.green,
-                      onPressed: () {
-                        auth
-                            .signInWithEmailAndPassword(
-                                email: _email, password: _pass)
-                            .then((result) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => First()),
-                          );
-                        }).catchError((err) {
-                          print(err.message);
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text("Error"),
-                                  content: Text(err.message),
-                                  actions: [
-                                    TextButton(
-                                      child: Text("Ok"),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    )
-                                  ],
-                                );
-                              });
-                        });
-                      }
-                      // if (_email == "abc@xyz.com" && _pass == "abc123") {
-                      //   Navigator.push(context,
-                      //       MaterialPageRoute(builder: (context) => First()));
-                      // } else {
-                      //   setState(() {
-                      //     error_msg = "WRONG EMAIL OR PASSWORD, TRY AGAIN!";
-                      //   });
-                      // }
-                      ),
+                  Shimmer(
+                    duration: Duration(milliseconds: 200),
+                    interval: Duration(milliseconds: 100),
+                    child: MaterialButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Text(
+                          "LOGIN",
+                          style: TextStyle(
+                              fontFamily: 'Montserrat', color: Colors.white),
+                        ),
+                        height: 40,
+                        minWidth: 250,
+                        color: colorbtn,
+                        onPressed: () {
+                          setState(() {
+                            colorbtn = Colors.greenAccent;
+                          });
+                          Future.delayed(const Duration(milliseconds: 3000),
+                              () {
+// Here you can write your code
+
+                            setState(() {
+                              colorbtn = Colors.green;
+                              // Here you can write your code for open new view
+                            });
+                          });
+                          auth
+                              .signInWithEmailAndPassword(
+                                  email: _email, password: _pass)
+                              .then((result) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => First()),
+                            );
+                          }).catchError((err) {
+                            print(err.message);
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Error"),
+                                    content: Text(err.message),
+                                    actions: [
+                                      TextButton(
+                                        child: Text("Ok"),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      )
+                                    ],
+                                  );
+                                });
+                          });
+                        }
+                        // if (_email == "abc@xyz.com" && _pass == "abc123") {
+                        //   Navigator.push(context,
+                        //       MaterialPageRoute(builder: (context) => First()));
+                        // } else {
+                        //   setState(() {
+                        //     error_msg = "WRONG EMAIL OR PASSWORD, TRY AGAIN!";
+                        //   });
+                        // }
+                        ),
+                    // gradient:
+                    //     LinearGradient(colors: [Colors.green, Colors.white]),
+                    // color: Colors.white,
+                    enabled: true,
+                  ),
                 ],
               ),
             ),

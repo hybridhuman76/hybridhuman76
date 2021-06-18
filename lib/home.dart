@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/test.dart';
+// import 'package:google_place/google_place.dart';
+import 'package:google_place/google_place.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
+// import 'package:shimmer/shimmer.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -6,17 +13,35 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  GooglePlace? googlePlace;
   double _width = 0;
   bool expanded = false;
   TextEditingController textController = TextEditingController();
 
   BorderRadiusGeometry _borderRadius = BorderRadius.circular(8);
 
+  void initState() {
+    super.initState();
+    String apiKey = 'hehe';
+    googlePlace = GooglePlace(apiKey);
+  }
+
+  // AIzaSyCFgLzN2-SMVLJOJw3qrZXBarb1elYjU6I
+
   @override
   Widget build(BuildContext context) {
     final double h = MediaQuery.of(context).size.height;
     final double w = MediaQuery.of(context).size.width;
+    // double lat = double.parse(position.latitude);
+    // double lng = double.parse(position.longitude);
+    getdata() async {
+      print(await googlePlace?.search.getNearBySearch(
+          Location(lat: 77.3910, lng: 28.5355), 50000,
+          type: "gym"));
+    }
 
+// https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=50000&type=gym&key=AIzaSyCFgLzN2-SMVLJOJw3qrZXBarb1elYjU6I
+    getdata();
     return Scaffold(
       body: Container(
           child: SafeArea(
@@ -25,7 +50,14 @@ class _HomeState extends State<Home> {
         children: <Widget>[
           Row(
             children: <Widget>[
-              IconButton(icon: Icon(Icons.menu), onPressed: () {}),
+              IconButton(
+                  icon: Icon(Icons.menu),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FullPageShimmerExample()));
+                  }),
               AnimatedContainer(
                 // Use the properties stored in the State class.
                 // width: _width,
@@ -100,28 +132,7 @@ class _HomeState extends State<Home> {
             height: h - 140,
             child: SingleChildScrollView(
               child: Column(
-                children: <Widget>[
-                  gymview("CrossFitness Gym",
-                      "Hoshiyarpur Village, Sector 51, Noida", 1.4),
-                  gymview(
-                      "GetFit Fit Forever Gym",
-                      "A-72, Sector 50, near Raghuveer Nursing Home, Noida, Uttar Pradesh",
-                      1.8),
-                  gymview("CrossFitness Gym",
-                      "Hoshiyarpur Village, Sector 51, Noida", 1.4),
-                  gymview(
-                      "GetFit Fit Forever Gym",
-                      "A-72, Sector 50, near Raghuveer Nursing Home, Noida, Uttar Pradesh",
-                      1.8),
-                  gymview("CrossFitness Gym",
-                      "Hoshiyarpur Village, Sector 51, Noida", 1.4),
-                  gymview(
-                      "GetFit Fit Forever Gym",
-                      "A-72, Sector 50, near Raghuveer Nursing Home, Noida, Uttar Pradesh",
-                      1.8),
-                  gymview("CrossFitness Gym",
-                      "Hoshiyarpur Village, Sector 51, Noida", 1.4),
-                ],
+                children: <Widget>[],
               ),
             ),
           )
@@ -166,7 +177,8 @@ gymview(String gymName, String gymLocation, double gymDistance) {
                             child: Padding(
                               padding: EdgeInsets.only(left: 5.0),
                               child: Text(
-                                "$gymName",
+                                "",
+                                // "$gymName",
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.w500,

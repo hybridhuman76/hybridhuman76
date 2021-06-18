@@ -41,6 +41,11 @@ dependencies:
   firebase_database: ^7.1.0
   splashscreen : ^1.2.0
   flutter_signin_button: ^1.0.0
+  google_place: ^0.4.0
+  geolocator: ^7.1.0
+  flutter_dotenv: ^5.0.0
+  shimmer: ^2.0.0
+  shimmer_animation: ^2.0.0
 
 dev_dependencies:
   flutter_test:

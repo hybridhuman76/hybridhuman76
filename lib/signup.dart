@@ -80,7 +80,7 @@ class _SignupState extends State<Signup> {
               minWidth: 250,
               color: Colors.green,
               onPressed: () {
-                var firebaseUser = FirebaseAuth.instance.currentUser;
+                // var firebaseUser = FirebaseAuth.instance.currentUser;
                 func() async {
                   await firebaseAuth
                       .createUserWithEmailAndPassword(

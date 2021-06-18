@@ -43,8 +43,8 @@ class _ThirdState extends State<Third> {
   @override
   Widget build(BuildContext context) {
     // CollectionReference users = FirebaseFirestore.instance.collection('users');
-    User? lol = FirebaseAuth.instance.currentUser;
-    final id = lol?.uid;
+    // User? lol = FirebaseAuth.instance.currentUser;
+    // final id = lol?.uid;
     x();
     return SafeArea(
         child: Container(
